@@ -53,6 +53,10 @@ int	ft_printf(const char *str, ...)
 			if (str[i] == 's')
 			{
 				char *argument = va_arg(args, char *);
+			 	if(!argument)
+					argument = "(null)";
+				else
+					argument = argument;
 				if (width > 0)
 				{
 					if (range > 0)
@@ -80,9 +84,20 @@ int	ft_printf(const char *str, ...)
 				count_char += ft_count(num, 10);
 				if (width > 0)
 				{
-					width -= ft_count(num, 10);
+					if (range > 0)
+					{
+						width -= range;
+						range -= ft_count(num, 10);
+					}
+					else
+						width -= ft_count(num, 10);
 					while (width-- > 0)
 						count_char += ft_putchar(' ');
+				}
+				if (range > 0)
+				{
+					while (range-- > 0)
+						ft_putchar('0');
 				}
 				ft_putnum(num, 10);
 			}
@@ -90,6 +105,23 @@ int	ft_printf(const char *str, ...)
 			{
 				num = va_arg(args, unsigned int);
 				count_char += ft_count(num, 16);
+				if (width > 0)
+				{
+					if (range > 0)
+					{
+						width -= range;
+						range -= ft_count(num, 16);
+					}
+					else
+						width -= ft_count(num, 16);
+					while (width-- > 0)
+						count_char += ft_putchar(' ');
+				}
+				if (range > 0)
+				{
+					while (range-- > 0)
+						ft_putchar('0');
+				}
 				ft_putnum(num, 16);
 			}
 		}
@@ -103,6 +135,6 @@ int	ft_printf(const char *str, ...)
 
 int	main(void)
 {
-	int result = printf("Hexadecimal for %d is %x\n", 42, 42);
-	printf("%d", result);
+	ft_printf("%s\n", NULL);
+	printf("%s\n", NULL);
 }
