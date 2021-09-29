@@ -43,20 +43,11 @@ int	ft_printf(const char *str, ...)
 		if (str[i] == '%')
 		{
 			i += 1;
-			while (str[i] >=  '0' && str[i] <= '9')
-				width = width * 10 + str[i++] - 48;
-			if (str[i] == '.' && ++i)
-			{
-				while (str[i] >=  '0' && str[i] <= '9')
-					range = range * 10 + str[i++] - 48;
-			}
 			if (str[i] == 's')
 			{
 				char *argument = va_arg(args, char *);
 			 	if(!argument)
 					argument = "(null)";
-				else
-					argument = argument;
 				if (width > 0)
 				{
 					if (range > 0)
