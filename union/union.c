@@ -12,57 +12,48 @@
 
 #include <unistd.h>
 
-void	ft_putchar(char c)
+void	ft_union(char *s1, char *s2)
 {
-	write(1, &c, 1);
-}
+	int	ascii[128];
+	int	i = 0;
 
-int		ft_exist(char *str, char c)
-{
-	int i;
-
-	i = 0;
-	while (s1[i])
+	while(i < 128)
 	{
-		if (s1[i] == c)
-			return (1);
+		ascii[i] = 0;
 		i++;
 	}
-	return (0);
-}
-
-void	ft_treat_union(char *s1, char *s2)
-{
-	int		i;
-	int		x;
-	char	s3[255];
-	char	*tmp;
-
 	i = 0;
-	x = 0;
-	while (s1[i])
+	while (*s1 && s1[i])
 	{
-		if (!(ft_exist(s3, s1[i])))
-			s3[x++] = s1[i];	
+		if (ascii[(int)s1[i]] == 0)
+		{
+			write(1, &s1[i], 1);
+			ascii[(int)s1[i]] = 1;
+		} 
 		i++;
 	}
-	i = 0
-	while (s2[i])
+	i = 0;
+	while(*s2 && s2[i])
 	{
-		if (!ft_exist(s3, s2[i]))
-			s3[i++] = s2[i];
+		if(ascii[(int) s2[i]] == 0)
+		{
+			write(1, &s2[i], 1);
+			ascii[(int)s2[i]] = 1;
+		}
 		i++;
 	}
-	s3[i] = '\0';
-	i = 0;
-	while (s3[i])
-		ft_putchar(s3[i++]);
 }
 
 int	main(int argc, char **argv)
 {
-	if (argc == 3)
-		ft_treat_union(argv[1], argv[2]);
-	ft_putchar('\n');
-	return (0);
+	if(argc == 3)
+	{
+		ft_union(argv[1], argv[2]);
+		write(1, "\n", 1);
+	}
+	else
+	{
+		write(1, "\n", 1);
+	}
+	return(0);
 }
